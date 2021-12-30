@@ -48,7 +48,7 @@ body {
     margin-top: 6%;
 }
 
-.button {
+button {
     margin: 2em;
     padding: .75em 1.5em;
     font-size: 16px;
@@ -57,14 +57,34 @@ body {
     background-color: #3a9476;
 }
 
-.button:hover {
+button:hover {
     transform: scale(1.05);
     transition-duration: 50ms;
 }
 
-.button .selected {
+.selected {
     color: #3a9476;
     background-color: #FAE8E0;
+}
+
+.color-selector {
+    -webkit-appearance: none;
+    width: 6em;
+    height: 6em;
+    border: none;
+    background: none;
+    margin: auto;
+}
+
+.color-selector:hover {
+    transform: scale(1.05);
+    transition-duration: 50ms;
+}
+
+.color-selector::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .vertical-div-container {

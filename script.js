@@ -1,6 +1,10 @@
+const solidColorButton = document.querySelector('#color-mode');
 const rainbowButton = document.querySelector('#rainbow-mode');
 const clearButton = document.querySelector('#clear-button');
+
+const colorSelector = document.querySelector('.color-selector');
 const gridSlider = document.querySelector('.slider');
+
 const MAX_COLOR_VALUE = 255;
 
 /**
@@ -32,6 +36,7 @@ function createDivs(widthAndHeight) {
     }
 }
 
+
 /**
  * This is ran every time the grid is resized so that the above function
  * can be recycled
@@ -47,6 +52,7 @@ function resetContainerDiv() {
     parent.appendChild(insertionDiv);
 }
 
+
 function getRandomColor() {
     const redValue = Math.floor(Math.random() * MAX_COLOR_VALUE) + 1;
     const blueValue = Math.floor(Math.random() * MAX_COLOR_VALUE) + 1;
@@ -55,13 +61,16 @@ function getRandomColor() {
     return `rgb(${redValue}, ${greenValue}, ${blueValue})`
 }
 
+
 function changeColor() {
     this.style.backgroundColor = color;
 }
 
+
 function changeRandomColor() {
     this.style.backgroundColor = getRandomColor();
 }
+
 
 clearButton.addEventListener('click', () => {
     const allDivs = document.querySelectorAll('.drawing-unit');
@@ -69,6 +78,7 @@ clearButton.addEventListener('click', () => {
         div.style.backgroundColor = 'white';
     }
 });
+
 
 gridSlider.addEventListener('change', () => {
     gridSize = parseInt(gridSlider.value);
@@ -80,6 +90,28 @@ gridSlider.addEventListener('change', () => {
     createDivs(gridSize);
 });
 
+
+colorSelector.addEventListener('change', () => {
+    color = colorSelector.value;
+});
+
+
+solidColorButton.addEventListener('click', () => {
+    if (rainbowMode) {
+        const allDivs = document.querySelectorAll('.drawing-unit');
+
+        for (const div of allDivs) {
+            div.removeEventListener('mouseover', changeRandomColor);
+            div.addEventListener('mouseover', changeColor);
+        }
+
+        rainbowMode = false;
+        rainbowButton.classList.toggle('selected');
+        solidColorButton.classList.toggle('selected');
+    }
+});
+
+
 rainbowButton.addEventListener('click', () => {
     if (!rainbowMode) {
         const allDivs = document.querySelectorAll('.drawing-unit');
@@ -88,20 +120,13 @@ rainbowButton.addEventListener('click', () => {
             div.removeEventListener('mouseover', changeColor);
             div.addEventListener('mouseover', changeRandomColor);
         }
-        rainbowMode = true;
-    } 
     
-    else {
-        const allDivs = document.querySelectorAll('.drawing-unit');
-        for (const div of allDivs) {
-            div.addEventListener('mouseover', changeColor);
-            div.removeEventListener('mouseover', changeRandomColor);
-        }
-        rainbowMode = false;
-    }
+        rainbowMode = true;
+        rainbowButton.classList.toggle('selected');
+        solidColorButton.classList.toggle('selected');
+    } 
+});
 
-    this.classList.toggle('selected');
-})
 
 let color = 'rgb(92, 92, 92)';
 let rainbowMode = false;
